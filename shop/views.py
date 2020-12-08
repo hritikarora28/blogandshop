@@ -4,7 +4,7 @@ from django.http import HttpResponse
 def index(request):
     return render(request, 'shop/index.html')
 def About(request):
-    return HttpResponse("we are at about")
+    return render(request, 'shop/about.html')
 def contact(request):
     return HttpResponse("we are at contact")
 def Tracker(request):
