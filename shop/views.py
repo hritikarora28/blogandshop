@@ -6,11 +6,20 @@ from math import ceil
 from django.http import HttpResponse
 
 def index(request):
-    products = Product.objects.all()
-    n = len(products)
-    nSlides = n//4 + ceil((n/4)-(n//4))
-    allProds = [[products, range(1, len(products)), nSlides],[products, range(1, len(products)), nSlides]]
+    #products = Product.objects.all()
+    #n = len(products)
+    #nSlides = n//4 + ceil((n/4)-(n//4))
+    #allProds = [[products, range(1, len(products)), nSlides],[products, range(1, len(products)), nSlides]]
+    allProds =[]
+    catprod = Product.objects.values('product_catergory', 'id')
+    cats = {item['product_catergory'] for item in catprod}
+    for cat in cats:
+        prod = Product.objects.filter(product_catergory=cat)
+        n = len(prod)
+        nSlides = n // 4 + ceil((n / 4) - (n // 4))
+        allProds.append([prod, range(1, len(prod)), nSlides])
     params = {'allProds':allProds }
+
     return render(request,"shop/index.html", params)
 
 def About(request):
