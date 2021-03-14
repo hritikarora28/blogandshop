@@ -61,7 +61,7 @@ ROOT_URLCONF = 'myawesomecart.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['myawesomecart/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
