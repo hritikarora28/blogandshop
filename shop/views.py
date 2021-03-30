@@ -27,6 +27,7 @@ def About(request):
     return render(request, 'shop/about.html')
 
 def contact(request):
+    thank = False
     if request.method == "POST":
 
         name = request.POST.get('name','')
@@ -34,10 +35,11 @@ def contact(request):
         email =request.POST.get('email')
         phone =request.POST.get('phone')
         desc =request.POST.get('desc')
-        contact = Contact(name =name, email=email, phone=phone, desc=desc)
+        contact = Contact(name=name, email=email, phone=phone, desc=desc)
         contact.save()
+        thank = True
 
-    return render(request, 'shop/contact.html')
+    return render(request, 'shop/contact.html', {'thank': thank})
 
 
 def Tracker(request):
