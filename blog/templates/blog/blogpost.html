@@ -4,16 +4,20 @@
     <div class="row mt-4">
         <div class="col-md-8 blog-main">
             <h3 class="pb-4 mb-4 font-italic border-bottom">
-                Title
+                {{post.title}}
             </h3>
             <div class="blog-post">
-                <h2 class="blog-post-title">Heading 0</h2>
-                <p class="blog-post-meta">January 1, 2014 by <a href="#">CodeWithHarry</a></p>
-                <p>Heading 0 content</p>
-                <h2>Heading1</h2>
-                <p> Heading 1 content</p>
-                <h2>Heading2</h2>
-                <p>Heading 2 content</p>
+                <h2 class="blog-post-title">{{post.head0}}</h2>
+                <p class="blog-post-meta">{{post.publish_date}} <a href="#">CodeWithHritik</a></p>
+
+                <p>{{post.chead0}}</p>
+                <div class="fb-like" data-href="http://127.0.0.1:8000/blog/blogpost/{{post.post_id}}" data-width="" data-layout="standard" data-action="like" data-size="small" data-share="true"></div>
+                <h2>{{post.head1}}</h2>
+                <p> {{post.chead1}}</p>
+                <h2>{{post.head2}}</h2>
+                <p>{{post.chead2}}</p>
+                <div class="fb-comments" data-href="http://127.0.0.1:8000/blog/blogpost/{{post.post_id}}" data-width="" data-numposts="5"></div>
+
             </div><!-- /.blog-post -->
         </div><!-- /.blog-main -->
         <aside class="col-md-4 blog-sidebar">

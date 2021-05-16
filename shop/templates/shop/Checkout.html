@@ -9,7 +9,7 @@
             </ul>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mt-3">
-                    <li class="breadcrumb-item active" aria-current="page">Your Cart Total Is <b>Rs.<span id="totalprice"></b>  </span>Enter your details below & place your order. Thanks for using My Awesome Cart!</li>
+                    <li class="breadcrumb-item active" aria-current="page">Your Cart Total Is <b>Rs.<span id="totalprice"> </b>  </span>Enter your details below & place your order. Thanks for using My Awesome Cart!</li>
                 </ol>
             </nav>
             
@@ -17,7 +17,8 @@
     <div class="col my-4">
         <h2>Step 2 - Enter Address & Other Details:</h2>
         <form method="post" action="/shop/Checkout">{% csrf_token %}
-            <input type="hidden" name="itemsJson" id="itemsJson">
+            <input type="hidden" name="itemsJson" id="itemsJson"/>
+            <input type="hidden" name="amount" id="amount"/>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="inputname">Name</label>
@@ -58,6 +59,7 @@
         </form>
     </div>
 </div>
+</div>
 {% endblock %}
 {% block js %}
 <script>
@@ -96,5 +98,7 @@ alert('Thanks for ordering with us. Your order is is {{id}}. Use it to track you
 localStorage.clear();
 document.location = "/shop";
 {% endif %}
+$('#amount').val($('#totalprice').html())
+
 </script>
 {% endblock %}

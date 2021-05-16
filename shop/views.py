@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from .models import Product,Contact,Orders, OrderUpdate
 from math import ceil
-import  json
+import json
+from django.views.decorators.csrf import csrf_exempt
+
+
 
 # Create your views here.
 from django.http import HttpResponse
@@ -76,13 +79,14 @@ def Checkout(request):
     if request.method == "POST":
         item_json = request.POST.get('itemsJson', '')
         name = request.POST.get('name', '')
+        amount = request.POST.get('amount', '')
         email = request.POST.get('email', '')
         address = request.POST.get('address1', '') + " " + request.POST.get('address2', '')
         city = request.POST.get('city', '')
         state = request.POST.get('state', '')
         zip_code = request.POST.get('zip_code', '')
         phone = request.POST.get('phone', '')
-        order = Orders(item_json=item_json, name=name, email=email, address=address, city=city,
+        order = Orders(item_json=item_json, name=name, amount=amount,email=email, address=address, city=city,
                        state=state, zip_code=zip_code, phone=phone)
         order.save()
         update = OrderUpdate(order_id=order.order_id, update_desc="The order has been placed")
@@ -90,4 +94,9 @@ def Checkout(request):
         thank = True
         id = order.order_id
         return render(request, 'shop/Checkout.html', {'thank': thank, 'id': id})
+        #request paytm to transfer amount from the user accounts
     return render(request, 'shop/Checkout.html')
+@csrf_exempt
+def handleRequest(request):
+    #paytm will send you request
+    pass
