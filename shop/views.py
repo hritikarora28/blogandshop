@@ -3,7 +3,7 @@ from .models import Product,Contact,Orders, OrderUpdate
 from math import ceil
 import json
 from django.views.decorators.csrf import csrf_exempt
-from .PayTm import  Checksum
+from .PayTm import Checksum
 
 # Create your views here.
 from django.http import HttpResponse
@@ -24,6 +24,27 @@ def index(request):
     params = {'allProds':allProds }
 
     return render(request,"shop/index.html", params)
+def searchMatch(query,item):
+    if query in item.product_description.lower() or query in item.product_name.lower() or query in item.product_catergory.lower():
+        return True
+    else:
+        return False
+def search(request):
+    query = request.GET.get('search')
+    allProds = []
+    catprod = Product.objects.values('product_catergory', 'id')
+    cats = {item['product_catergory'] for item in catprod}
+    for cat in cats:
+        prodtemp = Product.objects.filter(product_catergory=cat)
+        prod = [item for item in prodtemp if searchMatch(query,item)]
+        n = len(prod)
+        if len(prod)!=0:
+            nSlides = n // 4 + ceil((n / 4) - (n // 4))
+            allProds.append([prod, range(1, len(prod)), nSlides])
+    params = {'allProds': allProds,'msg':""}
+    if len(allProds) == 0 or len(query) < 4:
+        params = {'msg': "Please make sure to enter relevant search query"}
+    return render(request, "shop/search.html", params)
 
 def About(request):
     return render(request, 'shop/about.html')
@@ -65,8 +86,7 @@ def Tracker(request):
     return render(request, 'shop/Tracker.html')
 
 
-def Search(request):
-    return render(request, 'shop/search.html')
+
 
 def ProductView(request,myid):
     #fetch the product using id
