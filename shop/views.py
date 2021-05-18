@@ -76,12 +76,12 @@ def Tracker(request):
                 updates = []
                 for item in update:
                     updates.append({'text': item.update_desc, 'time': item.timestap})
-                    response = json.dumps([updates,order[0].item_json],default=str)
+                    response = json.dumps({"status": "success", "updates": updates, "itemsJson": order[0].item_json},default=str)
                 return HttpResponse(response)
             else:
-                return HttpResponse('{}')
+                return HttpResponse('{"status":"noitem"}')
         except Exception as e:
-            return HttpResponse('{}')
+            return HttpResponse('{"status":"error"}')
 
     return render(request, 'shop/Tracker.html')
 
